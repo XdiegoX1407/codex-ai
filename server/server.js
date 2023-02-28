@@ -1,8 +1,7 @@
-import { Configuration, OpenAIApi } from "openai";
 import express from "express";
 import * as dotenv from "dotenv";
-import bodyParser from "body-parser";
 import cors from "cors";
+import { Configuration, OpenAIApi } from "openai";
 
 dotenv.config();
 
@@ -13,8 +12,8 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const app = express();
-app.use(bodyParser.json());
 app.use(cors());
+app.use(express.json());
 
 app.get("/", async (req, res) => {
   res.status(200).send({
@@ -47,46 +46,3 @@ app.post("/", async (req, res) => {
 app.listen(5000, () =>
   console.log("Server is running on port http://localhost:5000")
 );
-
-/* const { Configuration, OpenAIApi } = require("openai");
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-
-const configuration = new Configuration({
-  organization: "org-68FpMwVrd4Yadkhbh6QYVut1",
-  apiKey: "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",
-});
-
-const openai = new OpenAIApi(configuration);
-
-const app = express();
-app.use(bodyParser.json());
-app.use(cors());
-
-app.get("/", async (req, res) => {
-  res.status(200).send({
-    message: "Hello from CodeX",
-  });
-});
-
-app.post("/", async (req, res) => {
-  const response = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt: req.body.prompt,
-    max_tokens: 3000,
-    temperature: 0,
-    top_p: 1,
-    frequency_penalty: 0.5,
-    presence_penalty: 0,
-  });
-
-  res.json({
-    bot: response.data.choices[0].text,
-  });
-});
-
-app.listen(5000, () =>
-  console.log("Server is running on port http://localhost:5000")
-);
- */
